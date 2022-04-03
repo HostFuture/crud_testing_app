@@ -1,4 +1,4 @@
-from api import app
+from api import app, db
 from api.sample.models import SampleData
 from datetime import datetime
 
@@ -16,10 +16,40 @@ def test_new_data():
 
 
 def test_get_page():
-  with app.test_client() as test_client:
-    response = test_client.get('/api/sample/all')
-    assert response.status_code == 200
-    assert b"count" in response.data
-    assert b"status" in response.data
-    assert b"data" in response.data
-    assert b"message" in response.data
+  test_client =  app.test_client()
+  response = test_client.get('/api/sample/all')
+  assert response.status_code == 404
+  assert b"error" in response.data
+  assert b"status" in response.data
+  assert b"data" in response.data
+  assert b"message" in response.data
+
+
+def test_update_id_page():
+  test_client =  app.test_client()
+  response = test_client.get('/api/sample/1')
+  assert response.status_code == 404
+  assert b"error" in response.data
+  assert b"status" in response.data
+  assert b"data" in response.data
+  assert b"message" in response.data
+
+
+def test_delete_id_page():
+  test_client =  app.test_client()
+  response = test_client.get('/api/sample/1')
+  assert response.status_code == 404
+  assert b"error" in response.data
+  assert b"status" in response.data
+  assert b"data" in response.data
+  assert b"message" in response.data
+
+
+def test_get_by_id_page():
+  test_client =  app.test_client()
+  response = test_client.get('/api/sample/1')
+  assert response.status_code == 404
+  assert b"error" in response.data
+  assert b"status" in response.data
+  assert b"data" in response.data
+  assert b"message" in response.data
