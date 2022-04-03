@@ -1,0 +1,475 @@
+openapi: "3.0.1"
+info:
+  description: This is a swagger file for CRUD Application Testing
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+# Paths supported by the server application
+paths:
+  /sample/all:
+    get:
+      operationId: "sample.read.all"
+      tags:
+        - "Read Data"
+      summary: "Lists all the Sample Data stored in the Database"
+      description: "Read the list of sample data available"
+      responses:
+        200:
+          description: "If there is no error in the query and data available in the database values will show"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    enum: 1
+                  data:
+                    type: array
+                    items:
+                      properties:
+                        age:
+                          type: integer
+                        checked:
+                          type: boolean
+                        date: 
+                          type: string
+                          format: date-time
+                        description:
+                          type: string
+                        id:
+                          type: integer
+                          enum: 1
+                        name:
+                          type: string
+                        type:
+                          type: string
+                  message:
+                    type: string
+                    enum: "There are 1 records available in the database!"
+                  status:
+                    type: integer
+                    enum: 200
+        404:
+          description: "If there is no data in the database"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: {}
+                  error:
+                    type: string
+                    enum: "No data available"
+                  message:
+                    type: string
+                    enum: "There is no records available in the database"
+                  status:
+                    type: integer
+                    enum: 404
+        500:
+          description: "If there is an error while fetching the data"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: {}
+                  error:
+                    type: string
+                  message:
+                    type: string
+                    enum: "We encounted an error while creating the record. Please read the API guide to proceed further."
+                  status:
+                    type: integer
+                    enum: 500
+  /sample/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      operationId: "sample.read.id"
+      tags:
+        - "Read Data"
+      summary: "Get the specific Sample Data by their Id"
+      description: "Read the specific sample data available"
+
+      responses:
+        200:
+          description: "If there is no error in the query and data available in the database values will show"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      age:
+                        type: integer
+                      checked:
+                        type: boolean
+                      date: 
+                        type: string
+                        format: date-time
+                      description:
+                        type: string
+                      id:
+                        type: integer
+                        enum: 1
+                      name:
+                        type: string
+                      type:
+                        type: string
+                  message:
+                    type: string
+                    enum: "The requested record is found in the database"
+                  status:
+                    type: integer
+                    enum: 200
+        404:
+          description: "If there is no data in the database"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: {}
+                  error:
+                    type: string
+                  message:
+                    type: string
+                    enum: "There is no records available associated with the id"
+                  status:
+                    type: integer
+                    enum: 404
+        500:
+          description: "If there is an error while fetching the data"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: {}
+                  error:
+                    type: string
+                  message:
+                    type: string
+                    enum: "We encounted an error while creating the record. Please read the API guide to proceed further."
+                  status:
+                    type: integer
+                    enum: 500
+  /sample/create:
+    post:
+      operationId: "sample.create"
+      tags:
+        - "Create Data"
+      summary: "Create a new Sample Data"
+      description: "Create Sample Data using the dedicated fields"
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                age:
+                  type: integer
+                checked:
+                  type: boolean
+                date: 
+                  type: string
+                description:
+                  type: string
+                name:
+                  type: string
+                type:
+                  type: string
+              example:
+                age: 18
+                checked: false
+                date: "2022-04-03 17:46:51"
+                description: "Test Description"
+                name: "John Doe"
+                type: "Human"
+
+      responses:
+        200:
+          description: "If there is no error in the query and data available in the database values will show"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      age:
+                        type: integer
+                      checked:
+                        type: boolean
+                      date: 
+                        type: string
+                        format: date-time
+                      description:
+                        type: string
+                      id:
+                        type: integer
+                        enum: 1
+                      name:
+                        type: string
+                      type:
+                        type: string
+                  message:
+                    type: string
+                    enum: "The requested record is found in the database"
+                  status:
+                    type: integer
+                    enum: 200
+        404:
+          description: "If there is no data in the database"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: {}
+                  error:
+                    type: string
+                  message:
+                    type: string
+                    enum: "There is no records available associated with the id"
+                  status:
+                    type: integer
+                    enum: 404
+        500:
+          description: "If there is an error while fetching the data"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: {}
+                  error:
+                    type: string
+                  message:
+                    type: string
+                    enum: "We encounted an error while creating the record. Please read the API guide to proceed further."
+                  status:
+                    type: integer
+                    enum: 500
+  /sample/{id}/update:
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      operationId: "sample.update"
+      tags:
+        - "Update Data"
+      summary: "Update an exsisting Sample Data by their Id"
+      description: "Update Sample data if available and return the updated Data"
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                age:
+                  type: integer
+                checked:
+                  type: boolean
+                date: 
+                  type: string
+                description:
+                  type: string
+                name:
+                  type: string
+                type:
+                  type: string
+              example:
+                age: 18
+                checked: false
+                date: "2022-04-03 17:46:51"
+                description: "Test Description"
+                name: "John Doe"
+                type: "Human"
+
+      responses:
+        200:
+          description: "If there is no error in the query and the execution is successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      age:
+                        type: integer
+                      checked:
+                        type: boolean
+                      date: 
+                        type: string
+                        format: date-time
+                      description:
+                        type: string
+                      id:
+                        type: integer
+                        enum: 1
+                      name:
+                        type: string
+                      type:
+                        type: string
+                  message:
+                    type: string
+                    enum: "The record is updated successfully"
+                  status:
+                    type: integer
+                    enum: 200
+        400:
+          description: "If there is no data in the database"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: {}
+                  error:
+                    type: string
+                  message:
+                    type: string
+                    enum: "We encounted an error while creating the record. Please read the API guide to proceed further."
+                  status:
+                    type: integer
+                    enum: 400
+        404:
+          description: "If there is no data in the database"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: {}
+                  error:
+                    type: string
+                  message:
+                    type: string
+                    enum: "There is no records available associated with the id"
+                  status:
+                    type: integer
+                    enum: 404
+        500:
+          description: "If there is an error while fetching the data"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: {}
+                  error:
+                    type: string
+                  message:
+                    type: string
+                    enum: "We encounted an error while creating the record. Please read the API guide to proceed further."
+                  status:
+                    type: integer
+                    enum: 500
+  /sample/{id}/delete:
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      operationId: "sample.delete"
+      tags:
+        - "Delete Data"
+      summary: "Delete an exsisting Sample Data by their Id"
+      description: "Deletes available Sample Data"
+
+      responses:
+        200:
+          description: "If there is no error in the query and data available in the database values will show"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum: "The record is deleted successfully"
+                  status:
+                    type: integer
+                    enum: 200
+        404:
+          description: "If there is no data in the database"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: {}
+                  error:
+                    type: string
+                  message:
+                    type: string
+                    enum: "There is no records available associated with the id"
+                  status:
+                    type: integer
+                    enum: 404
+        500:
+          description: "If there is an error while fetching the data"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: {}
+                  error:
+                    type: string
+                  message:
+                    type: string
+                    enum: "We encounted an error while creating the record. Please read the API guide to proceed further."
+                  status:
+                    type: integer
+                    enum: 500
+
